@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrendZone — Luxury Fashion Store | Premium Streetwear & Apparel</title>
+<meta name="description" content="TrendZone is a premium fashion destination for elevated streetwear and apparel. Flat 40% off, free delivery, easy returns and cash on delivery available.">
+<meta name="keywords" content="TrendZone, fashion store, premium clothing, streetwear, luxury apparel">
+<meta property="og:title" content="TrendZone — Luxury Fashion Store">
+<meta property="og:description" content="Elevated fashion, engineered for the way you actually move through your day.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ======================================================
+     TOKENS
+  ====================================================== */
+  :root{
+    --bg:#06091A;
+    --bg-alt:#0A0F26;
+    --surface:#0D1330;
+    --surface-glass: rgba(255,255,255,0.045);
+    --border-glass: rgba(255,255,255,0.09);
+    --primary:#2563EB;
+    --primary-light:#4F8CFF;
+    --accent:#06B6D4;
+    --white:#F5F7FF;
+    --gray:#9AA3C2;
+    --gray-dim:#6B7398;
+    --gradient-1: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
+    --gradient-2: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    --font-display:'Outfit', sans-serif;
+    --font-body:'Poppins', sans-serif;
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --shadow-glow: 0 8px 40px rgba(37,99,235,0.25);
+    --ease: cubic-bezier(.16,.84,.44,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  h1,h2,h3,h4{ font-family: var(--font-display); font-weight:700; letter-spacing:-0.02em; }
+  ::selection{ background: var(--accent); color:#06091A; }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background: var(--bg); }
+  ::-webkit-scrollbar-thumb{ background: linear-gradient(var(--primary), var(--accent)); border-radius: 10px; }
+
+  .container{
+    width:100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  section{ position:relative; }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color: var(--accent);
+    margin-bottom:16px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px; height:1px;
+    background: var(--accent);
+  }
+  .section-title{
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height:1.1;
+    margin-bottom:16px;
+  }
+  .section-sub{
+    color: var(--gray);
+    font-size:1.02rem;
+    max-width:560px;
+    font-weight:300;
+  }
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:56px;
+    flex-wrap:wrap;
+  }
+
+  .glow-text{
+    background: var(--gradient-2);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px 32px;
+    border-radius: 100px;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.01em;
+    overflow:hidden;
+    isolation:isolate;
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .btn-primary{
+    background: var(--gradient-1);
+    color:#04060F;
+    box-shadow: 0 10px 30px -6px rgba(37,99,235,0.55);
+  }
+  .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 16px 40px -6px rgba(6,182,212,0.6); }
+  .btn-ghost{
+    background: var(--surface-glass);
+    border:1px solid var(--border-glass);
+    color: var(--white);
+    backdrop-filter: blur(12px);
+  }
+  .btn-ghost:hover{ transform: translateY(-3px); border-color: var(--accent); background: rgba(6,182,212,0.08); }
+  .btn .ripple{
+    position:absolute; border-radius:50%; transform:scale(0);
+    background: rgba(255,255,255,0.5); animation: ripple .6s linear; pointer-events:none; z-index:-1;
+  }
+  @keyframes ripple{ to{ transform:scale(3); opacity:0; } }
+
+  .glass-card{
+    background: var(--surface-glass);
+    border:1px solid var(--border-glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: var(--radius-lg);
+  }
+
+  /* ======================================================
+     CURSOR GLOW
+  ====================================================== */
+  .cursor-glow{
+    position:fixed; top:0; left:0; width:420px; height:420px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.16) 0%, rgba(6,182,212,0.06) 45%, transparent 70%);
+    pointer-events:none;
+    transform: translate(-50%,-50%);
+    z-index:2;
+    transition: opacity .4s ease;
+    will-change: transform;
+  }
+  @media (max-width: 900px){ .cursor-glow{ display:none; } }
+
+  /* ======================================================
+     SCROLL PROGRESS
+  ====================================================== */
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px;
+    background: var(--gradient-1);
+    z-index:1000;
+    width:0%;
+    box-shadow: 0 0 12px rgba(6,182,212,0.8);
+  }
+
+  /* ======================================================
+     NAVBAR
+  ====================================================== */
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:900;
+    padding: 22px 0;
+    transition: all .45s var(--ease);
+  }
+  .navbar.scrolled{
+    padding:12px 0;
+    background: rgba(6,9,26,0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom:1px solid var(--border-glass);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family: var(--font-display);
+    font-size:1.5rem;
+    font-weight:800;
+    letter-spacing:-0.02em;
+  }
+  .logo span{
+    background: var(--gradient-1);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .nav-links{ display:flex; align-items:center; gap:40px; }
+  .nav-links a{
+    position:relative;
+    font-size:0.92rem;
+    font-weight:500;
+    color: var(--gray);
+    padding: 6px 0;
+    transition: color .3s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background: var(--gradient-1);
+    transition: width .35s var(--ease);
+    border-radius:2px;
+  }
+  .nav-links a:hover{ color: var(--white); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{ display:flex; align-items:center; gap:20px; }
+  .nav-cta .btn{ padding:12px 26px; font-size:0.88rem; }
+
+  .hamburger{
+    display:none; flex-direction:column; gap:5px; z-index:1100;
+    background:transparent; padding:8px;
+  }
+  .hamburger span{ width:24px; height:2px; background: var(--white); transition: all .35s var(--ease); border-radius:2px; }
+  .hamburger.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2){ opacity:0; }
+  .hamburger.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:1050;
+    background: rgba(6,9,26,0.98);
+    backdrop-filter: blur(20px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px;
+    transform: translateY(-100%);
+    transition: transform .5s var(--ease);
+  }
+  .mobile-menu.open{ transform: translateY(0); }
+  .mobile-menu a{ font-family: var(--font-display); font-size:1.7rem; font-weight:600; color: var(--white); }
+  .mobile-menu .btn{ margin-top:12px; }
+
+  /* ======================================================
+     HERO
+  ====================================================== */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    position:relative;
+    overflow:hidden;
+    padding-top:110px;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, rgba(37,99,235,0.28), transparent 60%),
+      var(--bg);
+  }
+  .hero-bg-blob{
+    position:absolute; border-radius:50%; filter: blur(90px); opacity:0.55; z-index:0;
+    animation: floatBlob 14s ease-in-out infinite;
+  }
+  .blob-1{ width:520px; height:520px; background: var(--primary); top:-140px; left:-160px; }
+  .blob-2{ width:460px; height:460px; background: var(--accent); bottom:-160px; right:-120px; animation-delay:-4s; }
+  .blob-3{ width:320px; height:320px; background:#7C3AED; top:40%; left:55%; opacity:0.25; animation-delay:-8s; }
+  @keyframes floatBlob{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    33%{ transform: translate(30px,-40px) scale(1.08); }
+    66%{ transform: translate(-25px,25px) scale(0.95); }
+  }
+
+  .particles{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+  .particle{
+    position:absolute; width:3px; height:3px; border-radius:50%;
+    background: var(--accent); opacity:0.6;
+    animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat{
+    0%{ transform: translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:0.8; }
+    90%{ opacity:0.5; }
+    100%{ transform: translateY(-100vh) translateX(30px); opacity:0; }
+  }
+
+  .hero-inner{
+    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:40px; align-items:center;
+    position:relative; z-index:2; width:100%;
+  }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:8px 18px; border-radius:100px;
+    background: var(--surface-glass); border:1px solid var(--border-glass);
+    font-size:0.82rem; font-weight:500; color: var(--gray); margin-bottom:28px;
+    backdrop-filter: blur(10px);
+  }
+  .hero-tag .dot{ width:7px; height:7px; border-radius:50%; background: var(--accent); box-shadow:0 0 10px var(--accent); animation: pulse 1.8s infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.03;
+    margin-bottom:26px;
+  }
+  .hero h1 .line{ display:block; overflow:hidden; }
+  .hero p.desc{
+    color: var(--gray);
+    font-size:1.08rem; font-weight:300;
+    max-width:480px; margin-bottom:38px;
+  }
+  .hero-actions{ display:flex; gap:18px; flex-wrap:wrap; margin-bottom:56px; }
+
+  .hero-stats{ display:flex; gap:44px; }
+  .hero-stat b{ font-family: var(--font-display); font-size:1.6rem; display:block; }
+  .hero-stat span{ color: var(--gray-dim); font-size:0.82rem; }
+
+  .hero-visual{ position:relative; height:560px; }
+  .hero-card-main{
+    position:absolute; inset:20px 40px 20px 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, rgba(37,99,235,0.35), rgba(6,182,212,0.15));
+    border:1px solid var(--border-glass);
+    overflow:hidden;
+    animation: floatCard 6s ease-in-out infinite;
+  }
+  .hero-card-main img{ width:100%; height:100%; object-fit:cover; opacity:0.92; }
+  @keyframes floatCard{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-18px); } }
+
+  .float-chip{
+    position:absolute; padding:16px 20px; border-radius: var(--radius-md);
+    display:flex; align-items:center; gap:12px;
+    animation: floatChip 5s ease-in-out infinite;
+  }
+  .chip-1{ top:14px; left:-10px; animation-delay:-1s; }
+  .chip-2{ bottom:40px; left:-30px; animation-delay:-2.5s; }
+  @keyframes floatChip{ 0%,100%{ transform: translateY(0) rotate(0deg); } 50%{ transform: translateY(-14px) rotate(-2deg); } }
+  .chip-icon{ width:38px; height:38px; border-radius:10px; background: var(--gradient-1); display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .chip-text b{ display:block; font-size:0.95rem; }
+  .chip-text span{ font-size:0.75rem; color: var(--gray); }
+
+  .scroll-indicator{
+    position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:10px; z-index:3;
+    color: var(--gray-dim); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase;
+  }
+  .scroll-indicator .mouse{
+    width:24px; height:38px; border:2px solid var(--border-glass); border-radius:14px; position:relative;
+  }
+  .scroll-indicator .mouse::before{
+    content:''; position:absolute; top:6px; left:50%; width:4px; height:8px; background: var(--accent);
+    border-radius:2px; transform: translateX(-50%); animation: scrollDot 1.6s infinite;
+  }
+  @keyframes scrollDot{ 0%{ opacity:1; top:6px; } 100%{ opacity:0; top:20px; } }
+
+  /* ======================================================
+     MARQUEE
+  ====================================================== */
+  .marquee-bar{
+    background: var(--gradient-1);
+    padding:14px 0; overflow:hidden; position:relative; z-index:5;
+  }
+  .marquee-track{
+    display:flex; width:max-content; gap:60px;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-bar:hover .marquee-track{ animation-play-state: paused; }
+  .marquee-track span{
+    font-family: var(--font-display); font-weight:700; font-size:0.95rem;
+    color:#04060F; letter-spacing:0.04em; display:flex; align-items:center; gap:14px; white-space:nowrap;
+  }
+  @keyframes marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+
+  /* ======================================================
+     REVEAL
+  ====================================================== */
+  .reveal{ opacity:0; transform: translateY(36px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.visible{ opacity:1; transform: translateY(0); }
+
+  /* ======================================================
+     PRODUCTS
+  ====================================================== */
+  .products{ padding:140px 0 120px; }
+  .product-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:28px;
+  }
+  .product-card{
+    padding:22px; position:relative; overflow:hidden;
+    transition: transform .5s var(--ease), border-color .5s var(--ease);
+  }
+  .product-card::before{
+    content:''; position:absolute; inset:-1px; border-radius: var(--radius-lg);
+    padding:1px; background: var(--gradient-1);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity:0; transition: opacity .5s ease;
+  }
+  .product-card:hover{ transform: translateY(-10px); }
+  .product-card:hover::before{ opacity:1; }
+  .product-media{
+    position:relative; border-radius: var(--radius-md); overflow:hidden;
+    height:280px; margin-bottom:20px;
+    background: linear-gradient(160deg, rgba(37,99,235,0.18), rgba(6,182,212,0.08));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .product-media img{ width:100%; height:100%; object-fit:cover; transition: transform .7s var(--ease); }
+  .product-card:hover .product-media img{ transform: scale(1.08); }
+  .product-badge{
+    position:absolute; top:14px; left:14px; z-index:2;
+    background: var(--gradient-2); color:#04060F; font-weight:700; font-size:0.72rem;
+    padding:6px 12px; border-radius:100px; letter-spacing:0.02em;
+  }
+  .product-emoji{ font-size:4.2rem; }
+  .product-name{ font-family: var(--font-display); font-size:1.15rem; margin-bottom:8px; }
+  .product-rating{ display:flex; align-items:center; gap:6px; margin-bottom:14px; color:#FFC94D; font-size:0.85rem; }
+  .product-rating span.count{ color: var(--gray-dim); }
+  .product-price{ display:flex; align-items:baseline; gap:10px; margin-bottom:20px; }
+  .price-new{ font-family: var(--font-display); font-size:1.35rem; font-weight:700; }
+  .price-old{ color: var(--gray-dim); text-decoration:line-through; font-size:0.92rem; }
+  .product-actions{ display:flex; gap:10px; }
+  .wa-btn{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px; border-radius:100px; font-size:0.85rem; font-weight:600;
+    background: rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.3);
+    transition: all .35s var(--ease);
+  }
+  .wa-btn:hover{ background: var(--gradient-1); color:#04060F; transform: translateY(-2px); }
+
+  /* ======================================================
+     WHY CHOOSE US
+  ====================================================== */
+  .why{ padding:100px 0; background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(6,182,212,0.08), transparent); }
+  .why-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:24px; }
+  .why-card{
+    padding:34px 26px; text-align:left; transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+  }
+  .why-card:hover{ transform: translateY(-8px); box-shadow: var(--shadow-glow); border-color: rgba(6,182,212,0.4); }
+  .why-icon{
+    width:56px; height:56px; border-radius:16px; margin-bottom:22px;
+    background: var(--gradient-1); display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+  }
+  .why-card h3{ font-size:1.1rem; margin-bottom:10px; }
+  .why-card p{ color: var(--gray); font-size:0.9rem; font-weight:300; }
+
+  /* ======================================================
+     OFFERS
+  ====================================================== */
+  .offers{ padding:100px 0; }
+  .offers-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:28px; }
+  .offer-banner{
+    position:relative; border-radius: var(--radius-lg); padding:48px 40px; overflow:hidden;
+    min-height:320px; display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .offer-1{ background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #06B6D4 100%); }
+  .offer-2{ background: linear-gradient(135deg, #06B6D4 0%, #7C3AED 60%, #2563EB 100%); }
+  .offer-bg-anim{
+    position:absolute; inset:0; opacity:0.5;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 55%);
+    animation: shift 8s ease-in-out infinite alternate;
+  }
+  @keyframes shift{ from{ transform: translate(0,0) scale(1); } to{ transform: translate(20px,-16px) scale(1.15); } }
+  .offer-banner .tag{
+    align-self:flex-start; background: rgba(0,0,0,0.25); padding:6px 16px; border-radius:100px;
+    font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px;
+    position:relative; z-index:2;
+  }
+  .offer-banner h3{ font-size:2rem; position:relative; z-index:2; margin-bottom:10px; color:#fff; }
+  .offer-banner p{ position:relative; z-index:2; color:rgba(255,255,255,0.85); font-weight:300; margin-bottom:26px; max-width:320px; }
+  .countdown{ display:flex; gap:14px; position:relative; z-index:2; margin-bottom:24px; }
+  .countdown div{
+    background: rgba(0,0,0,0.28); backdrop-filter: blur(8px);
+    border-radius:12px; padding:10px 14px; text-align:center; min-width:64px;
+  }
+  .countdown div b{ display:block; font-family: var(--font-display); font-size:1.4rem; color:#fff; }
+  .countdown div span{ font-size:0.65rem; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.06em; }
+  .offer-banner .btn{ align-self:flex-start; position:relative; z-index:2; background:#fff; color:#06091A; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
+  .offer-banner .btn:hover{ transform: translateY(-3px) scale(1.03); }
+
+  /* ======================================================
+     TESTIMONIALS
+  ====================================================== */
+  .testimonials{ padding:100px 0; }
+  .test-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:26px; }
+  .test-card{ padding:32px; transition: transform .45s var(--ease); }
+  .test-card:hover{ transform: translateY(-8px); }
+  .test-stars{ color:#FFC94D; margin-bottom:18px; font-size:0.95rem; letter-spacing:2px; }
+  .test-card p{ color: var(--gray); font-weight:300; margin-bottom:26px; font-size:0.95rem; }
+  .test-person{ display:flex; align-items:center; gap:14px; }
+  .test-avatar{
+    width:46px; height:46px; border-radius:50%; background: var(--gradient-1);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-family: var(--font-display);
+  }
+  .test-person b{ font-size:0.92rem; display:block; }
+  .test-person span{ font-size:0.78rem; color: var(--gray-dim); }
+
+  /* ======================================================
+     INSTAGRAM
+  ====================================================== */
+  .insta{ padding:100px 0; }
+  .insta-grid{ display:grid; grid-template-columns: repeat(6,1fr); gap:16px; }
+  .insta-card{
+    position:relative; aspect-ratio:1/1; border-radius: var(--radius-sm); overflow:hidden;
+    border:1px solid var(--border-glass);
+  }
+  .insta-card img{ width:100%; height:100%; object-fit:cover; transition: transform .6s var(--ease); }
+  .insta-card:hover img{ transform: scale(1.15); }
+  .insta-overlay{
+    position:absolute; inset:0; background: linear-gradient(180deg, transparent 40%, rgba(6,9,26,0.9));
+    display:flex; align-items:flex-end; padding:12px; opacity:0; transition: opacity .4s ease;
+  }
+  .insta-card:hover .insta-overlay{ opacity:1; }
+  .insta-overlay span{ font-size:0.8rem; font-weight:600; }
+
+  /* ======================================================
+     NEWSLETTER
+  ====================================================== */
+  .newsletter{ padding:110px 0; }
+  .newsletter-box{
+    text-align:center; padding:70px 40px; position:relative; overflow:hidden;
+    background: linear-gradient(135deg, rgba(37,99,235,0.14), rgba(6,182,212,0.08));
+  }
+  .newsletter-box h2{ font-size: clamp(1.8rem,3.4vw,2.6rem); margin-bottom:14px; }
+  .newsletter-box p{ color: var(--gray); max-width:460px; margin:0 auto 34px; font-weight:300; }
+  .newsletter-form{ display:flex; gap:12px; max-width:460px; margin:0 auto; flex-wrap:wrap; justify-content:center; }
+  .newsletter-form input{
+    flex:1; min-width:220px; padding:16px 22px; border-radius:100px;
+    background: rgba(255,255,255,0.06); border:1px solid var(--border-glass); color:#fff; font-size:0.95rem;
+  }
+  .newsletter-form input::placeholder{ color: var(--gray-dim); }
+  .newsletter-form input:focus{ outline:none; border-color: var(--accent); }
+  .form-msg{ margin-top:16px; font-size:0.85rem; color: var(--accent); min-height:20px; }
+
+  /* ======================================================
+     CONTACT
+  ====================================================== */
+  .contact{ padding:100px 0; }
+  .contact-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap:28px; align-items:stretch; }
+  .wa-huge{
+    padding:48px; display:flex; flex-direction:column; justify-content:center;
+    background: linear-gradient(135deg, rgba(37,99,235,0.22), rgba(6,182,212,0.1));
+  }
+  .wa-huge h3{ font-size:1.9rem; margin-bottom:14px; }
+  .wa-huge p{ color: var(--gray); font-weight:300; margin-bottom:28px; max-width:400px; }
+  .contact-details{ display:flex; flex-direction:column; gap:22px; padding:36px; }
+  .contact-row{ display:flex; gap:16px; align-items:flex-start; }
+  .contact-row .icn{
+    width:44px; height:44px; border-radius:12px; background: rgba(37,99,235,0.15);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.15rem;
+  }
+  .contact-row b{ display:block; font-size:0.92rem; margin-bottom:3px; }
+  .contact-row span{ color: var(--gray); font-size:0.87rem; font-weight:300; }
+  .map-card{
+    height:150px; border-radius: var(--radius-md); margin-top:6px;
+    background:
+      linear-gradient(rgba(6,9,26,0.5), rgba(6,9,26,0.7)),
+      repeating-linear-gradient(45deg, rgba(37,99,235,0.15) 0 2px, transparent 2px 22px),
+      repeating-linear-gradient(-45deg, rgba(6,182,212,0.12) 0 2px, transparent 2px 22px);
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border-glass); font-size:0.85rem; color: var(--gray);
+  }
+
+  /* ======================================================
+     FOOTER
+  ====================================================== */
+  footer{ padding:80px 0 32px; border-top:1px solid var(--border-glass); }
+  .footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap:40px; margin-bottom:56px; }
+  .footer-brand p{ color: var(--gray); font-weight:300; font-size:0.9rem; margin:16px 0 22px; max-width:280px; }
+  .footer-social{ display:flex; gap:12px; }
+  .footer-social a{
+    width:40px; height:40px; border-radius:50%; border:1px solid var(--border-glass);
+    display:flex; align-items:center; justify-content:center; transition: all .35s var(--ease); font-size:1rem;
+  }
+  .footer-social a:hover{ background: var(--gradient-1); border-color:transparent; transform: translateY(-3px); }
+  .footer-col h4{ font-size:0.95rem; margin-bottom:20px; }
+  .footer-col a{ display:block; color: var(--gray); font-size:0.88rem; margin-bottom:13px; transition: color .3s ease; font-weight:300; }
+  .footer-col a:hover{ color: var(--accent); }
+  .footer-divider{ height:1px; background: var(--border-glass); margin-bottom:28px; }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; color: var(--gray-dim); font-size:0.82rem; }
+
+  /* ======================================================
+     BACK TO TOP
+  ====================================================== */
+  .back-top{
+    position:fixed; bottom:30px; right:30px; width:52px; height:52px; border-radius:50%;
+    background: var(--gradient-1); display:flex; align-items:center; justify-content:center;
+    z-index:500; opacity:0; visibility:hidden; transform: translateY(20px);
+    transition: all .4s var(--ease); box-shadow: 0 10px 30px rgba(37,99,235,0.5); color:#04060F; font-size:1.2rem;
+  }
+  .back-top.show{ opacity:1; visibility:visible; transform: translateY(0); }
+  .back-top:hover{ transform: translateY(-5px); }
+
+  /* WhatsApp floating button */
+  .wa-float{
+    position:fixed; bottom:30px; left:30px; width:58px; height:58px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center; z-index:500;
+    box-shadow: 0 10px 30px rgba(37,211,102,0.5); font-size:1.6rem; animation: waPulse 2.4s infinite;
+  }
+  @keyframes waPulse{ 0%,100%{ box-shadow:0 10px 30px rgba(37,211,102,0.5);} 50%{ box-shadow:0 10px 46px rgba(37,211,102,0.85);} }
+
+  /* ======================================================
+     RESPONSIVE
+  ====================================================== */
+  @media (max-width: 1024px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .hero-visual{ height:420px; order:-1; }
+    .product-grid{ grid-template-columns: repeat(2,1fr); }
+    .why-grid{ grid-template-columns: repeat(2,1fr); }
+    .offers-grid{ grid-template-columns:1fr; }
+    .test-grid{ grid-template-columns: repeat(2,1fr); }
+    .insta-grid{ grid-template-columns: repeat(3,1fr); }
+    .contact-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px){
+    .nav-links, .nav-cta .btn-ghost{ display:none; }
+    .hamburger{ display:flex; }
+    .container{ padding:0 20px; }
+    .product-grid{ grid-template-columns:1fr; }
+    .why-grid{ grid-template-columns:1fr; }
+    .test-grid{ grid-template-columns:1fr; }
+    .insta-grid{ grid-template-columns: repeat(2,1fr); }
+    .footer-grid{ grid-template-columns:1fr; gap:32px; }
+    .hero-stats{ gap:26px; flex-wrap:wrap; }
+    .section-head{ margin-bottom:36px; }
+    .hero{ padding-top:100px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ======================================================
+     PRELOADER
+  ====================================================== */
+  html.is-loading, html.is-loading body{
+    overflow:hidden;
+    height:100%;
+  }
+
+  #preloader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at 50% 45%, #0A0F26 0%, #06091A 70%);
+    transition: opacity .6s var(--ease), visibility .6s var(--ease);
+  }
+
+  #preloader.pl-hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  .pl-logo{
+    font-family: var(--font-display);
+    font-weight:800;
+    font-size: clamp(2.2rem, 7vw, 4.2rem);
+    letter-spacing:0.02em;
+    display:flex;
+    white-space:nowrap;
+  }
+
+  .pl-logo .pl-char{
+    display:inline-block;
+    opacity:0;
+    transform: translateY(28px) scale(0.85);
+    filter: blur(6px);
+    animation: plCharIn .7s var(--ease) forwards;
+  }
+
+  .pl-logo .pl-char.pl-accent{
+    background: var(--gradient-1);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  @keyframes plCharIn{
+    to{ opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+  }
+
+  .pl-underline{
+    position:absolute;
+    bottom:calc(50% - 3.4rem);
+    left:50%;
+    width:0;
+    height:2px;
+    background: var(--gradient-1);
+    transform: translateX(-50%);
+    animation: plLine .5s var(--ease) forwards;
+    animation-delay: 1.05s;
+    box-shadow: 0 0 14px var(--accent);
+  }
+
+  @keyframes plLine{ to{ width:min(220px, 46vw); } }
+
+  /* Blink flash */
+  #preloader.pl-blink::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:#fff;
+    opacity:0;
+    animation: plBlink .32s ease-out forwards;
+  }
+
+  @keyframes plBlink{
+    0%{ opacity:0; }
+    35%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+
+  /* Site content blur/reveal */
+  #siteContent{
+    opacity:0;
+    filter: blur(18px);
+    transform: scale(1.02);
+    transition: opacity 1s var(--ease), filter 1s var(--ease), transform 1s var(--ease);
+  }
+
+  #siteContent.sc-reveal{
+    opacity:1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .pl-logo .pl-char{ animation-duration:0.001ms !important; }
+    .pl-underline{ animation-duration:0.001ms !important; }
+    #preloader.pl-blink::after{ animation-duration:0.001ms !important; }
+    #siteContent{ transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== PRELOADER ===================== -->
+<div id="preloader">
+  <div class="pl-logo" aria-label="TrendZone">
+    <span class="pl-char" style="animation-delay:.05s">T</span>
+    <span class="pl-char" style="animation-delay:.11s">r</span>
+    <span class="pl-char" style="animation-delay:.17s">e</span>
+    <span class="pl-char" style="animation-delay:.23s">n</span>
+    <span class="pl-char" style="animation-delay:.29s">d</span>
+    <span class="pl-char pl-accent" style="animation-delay:.37s">Z</span>
+    <span class="pl-char pl-accent" style="animation-delay:.43s">o</span>
+    <span class="pl-char pl-accent" style="animation-delay:.49s">n</span>
+    <span class="pl-char pl-accent" style="animation-delay:.55s">e</span>
+  </div>
+  <div class="pl-underline"></div>
+</div>
+
+<div id="siteContent">
+
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">Trend<span>Zone</span></a>
+    <nav class="nav-links">
+      <a href="#collection">Collection</a>
+      <a href="#why">Why Us</a>
+      <a href="#offers">Offers</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-ghost">Sign In</a>
+      <a href="https://wa.me/918727003429" class="btn btn-primary" target="_blank" rel="noopener">Shop Now</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#collection">Collection</a>
+  <a href="#why">Why Us</a>
+  <a href="#offers">Offers</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#contact">Contact</a>
+  <a href="https://wa.me/918727003429" class="btn btn-primary" target="_blank" rel="noopener">Shop Now</a>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+  <div class="hero-bg-blob blob-1"></div>
+  <div class="hero-bg-blob blob-2"></div>
+  <div class="hero-bg-blob blob-3"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag"><span class="dot"></span> New Season Drop — Live Now</div>
+      <h1>
+        <span class="line">Wear the edge</span>
+        <span class="line">of <span class="glow-text">tomorrow,</span></span>
+        <span class="line">today.</span>
+      </h1>
+      <p class="desc">TrendZone curates elevated streetwear built on precision tailoring and future-forward fabric — designed for people who move fast and dress deliberately.</p>
+      <div class="hero-actions">
+        <a href="#collection" class="btn btn-primary">Browse Collection</a>
+        <a href="https://wa.me/918727003429" class="btn btn-ghost" target="_blank" rel="noopener">💬 WhatsApp Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>12K+</b><span>Happy Customers</span></div>
+        <div class="hero-stat"><b>4.9★</b><span>Average Rating</span></div>
+        <div class="hero-stat"><b>40%</b><span>Off This Week</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop" alt="Model wearing TrendZone premium streetwear jacket" loading="lazy">
+      </div>
+      <div class="float-chip glass-card chip-1">
+        <div class="chip-icon">⚡</div>
+        <div class="chip-text"><b>Flat 40% OFF</b><span>Limited time</span></div>
+      </div>
+      <div class="float-chip glass-card chip-2">
+        <div class="chip-icon">🚚</div>
+        <div class="chip-text"><b>Free Delivery</b><span>Pan India</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator"><div class="mouse"></div>Scroll</div>
+</section>
+
+<!-- ===================== ANNOUNCEMENT MARQUEE ===================== -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>✦ FREE DELIVERY</span>
+    <span>✦ NEW ARRIVALS</span>
+    <span>✦ COD AVAILABLE</span>
+    <span>✦ FLAT 40% OFF</span>
+    <span>✦ FREE DELIVERY</span>
+    <span>✦ NEW ARRIVALS</span>
+    <span>✦ COD AVAILABLE</span>
+    <span>✦ FLAT 40% OFF</span>
+  </div>
+</div>
+
+<!-- ===================== FEATURED PRODUCTS ===================== -->
+<section class="products" id="collection">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">The Edit</div>
+        <h2 class="section-title">Featured <span class="glow-text">Collection</span></h2>
+        <p class="section-sub">Six signature pieces from this season's drop — engineered fabric, tailored fit.</p>
+      </div>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-40%</span>
+          <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop" alt="Oversized Bomber Jacket" loading="lazy">
+        </div>
+        <h3 class="product-name">Oversized Bomber Jacket</h3>
+        <div class="product-rating">★★★★★ <span class="count">(214)</span></div>
+        <div class="product-price"><span class="price-new">₹2,399</span><span class="price-old">₹3,999</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Oversized%20Bomber%20Jacket" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-30%</span>
+          <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop" alt="Essential Graphic Tee" loading="lazy">
+        </div>
+        <h3 class="product-name">Essential Graphic Tee</h3>
+        <div class="product-rating">★★★★★ <span class="count">(389)</span></div>
+        <div class="product-price"><span class="price-new">₹899</span><span class="price-old">₹1,299</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Essential%20Graphic%20Tee" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-25%</span>
+          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop" alt="Tapered Cargo Trousers" loading="lazy">
+        </div>
+        <h3 class="product-name">Tapered Cargo Trousers</h3>
+        <div class="product-rating">★★★★☆ <span class="count">(167)</span></div>
+        <div class="product-price"><span class="price-new">₹1,799</span><span class="price-old">₹2,399</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Tapered%20Cargo%20Trousers" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-35%</span>
+          <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Structured Overshirt" loading="lazy">
+        </div>
+        <h3 class="product-name">Structured Overshirt</h3>
+        <div class="product-rating">★★★★★ <span class="count">(298)</span></div>
+        <div class="product-price"><span class="price-new">₹1,949</span><span class="price-old">₹2,999</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Structured%20Overshirt" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-20%</span>
+          <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800&auto=format&fit=crop" alt="Minimal Runner Sneakers" loading="lazy">
+        </div>
+        <h3 class="product-name">Minimal Runner Sneakers</h3>
+        <div class="product-rating">★★★★★ <span class="count">(452)</span></div>
+        <div class="product-price"><span class="price-new">₹3,199</span><span class="price-old">₹3,999</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Minimal%20Runner%20Sneakers" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="product-card glass-card reveal">
+        <div class="product-media">
+          <span class="product-badge">-45%</span>
+          <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=800&auto=format&fit=crop" alt="Classic Denim Jacket" loading="lazy">
+        </div>
+        <h3 class="product-name">Classic Denim Jacket</h3>
+        <div class="product-rating">★★★★☆ <span class="count">(176)</span></div>
+        <div class="product-price"><span class="price-new">₹2,199</span><span class="price-old">₹3,999</span></div>
+        <div class="product-actions">
+          <a href="https://wa.me/918727003429?text=Hi!%20I'm%20interested%20in%20the%20Classic%20Denim%20Jacket" class="wa-btn" target="_blank" rel="noopener">💬 Buy on WhatsApp</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY CHOOSE US ===================== -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">The Standard</div>
+        <h2 class="section-title">Why Shop <span class="glow-text">TrendZone</span></h2>
+        <p class="section-sub">Every order backed by service that matches the product.</p>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card glass-card reveal">
+        <div class="why-icon">🚀</div>
+        <h3>Fast Delivery</h3>
+        <p>Dispatched within 24 hours, on your doorstep in 2–4 days across India.</p>
+      </div>
+      <div class="why-card glass-card reveal">
+        <div class="why-icon">↺</div>
+        <h3>Easy Returns</h3>
+        <p>7-day no-questions-asked returns and free exchanges on every order.</p>
+      </div>
+      <div class="why-card glass-card reveal">
+        <div class="why-icon">✦</div>
+        <h3>Premium Quality</h3>
+        <p>Fabric-tested, stitch-checked, and finished to a standard that lasts seasons.</p>
+      </div>
+      <div class="why-card glass-card reveal">
+        <div class="why-icon">₹</div>
+        <h3>Best Prices</h3>
+        <p>Direct-from-studio pricing — no middlemen, no markup, just honest value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SPECIAL OFFERS ===================== -->
+<section class="offers" id="offers">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Limited Time</div>
+        <h2 class="section-title">Special <span class="glow-text">Offers</span></h2>
+      </div>
+    </div>
+    <div class="offers-grid">
+      <div class="offer-banner offer-1 reveal">
+        <div class="offer-bg-anim"></div>
+        <div>
+          <div class="tag">Flash Sale</div>
+          <h3>Flat 40% Off Sitewide</h3>
+          <p>On all outerwear and footwear. Ends when the timer hits zero.</p>
+        </div>
+        <div class="countdown" id="countdown1">
+          <div><b id="c1-h">00</b><span>Hrs</span></div>
+          <div><b id="c1-m">00</b><span>Min</span></div>
+          <div><b id="c1-s">00</b><span>Sec</span></div>
+        </div>
+        <a href="#collection" class="btn">Shop The Sale</a>
+      </div>
+
+      <div class="offer-banner offer-2 reveal">
+        <div class="offer-bg-anim"></div>
+        <div>
+          <div class="tag">New Drop</div>
+          <h3>First Access, First 100</h3>
+          <p>Early access to the new arrivals collection plus a free gift on first order.</p>
+        </div>
+        <div class="countdown" id="countdown2">
+          <div><b id="c2-h">00</b><span>Hrs</span></div>
+          <div><b id="c2-m">00</b><span>Min</span></div>
+          <div><b id="c2-s">00</b><span>Sec</span></div>
+        </div>
+        <a href="#collection" class="btn">Get Early Access</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Word On The Street</div>
+        <h2 class="section-title">Loved By <span class="glow-text">Thousands</span></h2>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="test-card glass-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"The bomber jacket fit better than anything I've bought from a mall brand — and it arrived in two days flat."</p>
+        <div class="test-person">
+          <div class="test-avatar">A</div>
+          <div><b>Aarav Mehta</b><span>Delhi</span></div>
+        </div>
+      </div>
+      <div class="test-card glass-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Ordered COD, tried it on, kept it instantly. Fabric feels genuinely premium, not fast-fashion thin."</p>
+        <div class="test-person">
+          <div class="test-avatar">S</div>
+          <div><b>Sana Kapoor</b><span>Mumbai</span></div>
+        </div>
+      </div>
+      <div class="test-card glass-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Customer support on WhatsApp answered in minutes and helped me size up. That's rare these days."</p>
+        <div class="test-person">
+          <div class="test-avatar">R</div>
+          <div><b>Rohan Verma</b><span>Bengaluru</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INSTAGRAM FEED ===================== -->
+<section class="insta">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">@trendzone.in</div>
+        <h2 class="section-title">From The <span class="glow-text">Community</span></h2>
+      </div>
+    </div>
+    <div class="insta-grid">
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=500&auto=format&fit=crop" alt="Street style outfit" loading="lazy"><div class="insta-overlay"><span>❤ 1.2k</span></div></div>
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?q=80&w=500&auto=format&fit=crop" alt="Fashion editorial shot" loading="lazy"><div class="insta-overlay"><span>❤ 980</span></div></div>
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=500&auto=format&fit=crop" alt="Denim styling" loading="lazy"><div class="insta-overlay"><span>❤ 2.1k</span></div></div>
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?q=80&w=500&auto=format&fit=crop" alt="Sneaker closeup" loading="lazy"><div class="insta-overlay"><span>❤ 1.5k</span></div></div>
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop" alt="Studio fashion shot" loading="lazy"><div class="insta-overlay"><span>❤ 870</span></div></div>
+      <div class="insta-card reveal"><img src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=500&auto=format&fit=crop" alt="Outfit flatlay" loading="lazy"><div class="insta-overlay"><span>❤ 1.8k</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NEWSLETTER ===================== -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-box glass-card reveal">
+      <div class="eyebrow" style="justify-content:center;">Stay In The Loop</div>
+      <h2>Get 10% Off Your First Order</h2>
+      <p>Subscribe for early access to drops, restocks, and members-only pricing.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Enter your email address" required id="newsletterEmail">
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+      <div class="form-msg" id="formMsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Talk To Us</div>
+        <h2 class="section-title">Get In <span class="glow-text">Touch</span></h2>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="wa-huge glass-card reveal">
+        <h3>Questions? Just message us.</h3>
+        <p>Our style team replies on WhatsApp within minutes, every day of the week.</p>
+        <a href="https://wa.me/918727003429" class="btn btn-primary" target="_blank" rel="noopener">💬 Chat On WhatsApp</a>
+      </div>
+      <div class="contact-details glass-card reveal">
+        <div class="contact-row"><div class="icn">📞</div><div><b>Phone</b><span>+91 99999 99999</span></div></div>
+        <div class="contact-row"><div class="icn">✉️</div><div><b>Email</b><span>hello@trendzone.in</span></div></div>
+        <div class="contact-row"><div class="icn">📍</div><div><b>Address</b><span>Model Town, Ludhiana, Punjab, India</span></div></div>
+        <div class="contact-row"><div class="icn">🕒</div><div><b>Business Hours</b><span>Mon – Sat, 10am – 8pm IST</span></div></div>
+        <div class="map-card">📍 Ludhiana, Punjab — Map Preview</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo">Trend<span>Zone</span></a>
+        <p>Elevated fashion, engineered for the way you actually move through your day. Designed in India, worn everywhere.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/aruvia.digital" aria-label="Instagram">📷</a>
+          <a href="https://www.facebook.com/share/1D3GVfcW1Y/?mibextid=wwXIfr" aria-label="Facebook">📘</a>
+          <a href="https://wa.me/918727003429" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#collection">New Arrivals</a>
+        <a href="#collection">Best Sellers</a>
+        <a href="#offers">Sale</a>
+        <a href="#collection">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#why">About Us</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="color:var(--gray); font-size:0.85rem; font-weight:300; margin-bottom:14px;">Get style drops in your inbox.</p>
+        <a href="#contact">Subscribe →</a>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© 2026 TrendZone. All rights reserved.</span>
+      <span>Crafted with care in India 🇮🇳</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918727003429" class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+</div><!-- /#siteContent -->
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Preloader sequence ---------- */
+  var htmlEl = document.documentElement;
+  var preloader = document.getElementById('preloader');
+  var siteContent = document.getElementById('siteContent');
+
+  function revealSite(){
+    // 1. Blink flash
+    preloader.classList.add('pl-blink');
+
+    setTimeout(function(){
+      // 2. Hide preloader + start blur-to-clear reveal at the same time
+      preloader.classList.add('pl-hide');
+      siteContent.classList.add('sc-reveal');
+      htmlEl.classList.remove('is-loading');
+
+      // 3. Fully remove preloader from flow once faded out
+      setTimeout(function(){
+        preloader.remove();
+      }, 650);
+    }, 220);
+  }
+
+  // Letters finish animating ~1.05s in, underline finishes ~1.55s in
+  window.addEventListener('load', function(){
+    setTimeout(revealSite, 1600);
+  });
+
+  // Fallback in case 'load' event is delayed/blocked
+  setTimeout(revealSite, 4000);
+
+  /* ---------- Scroll Progress Bar ---------- */
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  }
+
+  /* ---------- Navbar scroll state + Back to top ---------- */
+  const navbar = document.getElementById('navbar');
+  const backTop = document.getElementById('backTop');
+  function onScroll(){
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    backTop.classList.toggle('show', y > 500);
+    updateProgress();
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  backTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+  /* ---------- Mobile Menu ---------- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+
+  /* ---------- Cursor Glow ---------- */
+  const glow = document.getElementById('cursorGlow');
+  let mx = window.innerWidth/2, my = window.innerHeight/2, gx = mx, gy = my;
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateGlow(){
+    gx += (mx - gx) * 0.12;
+    gy += (my - gy) * 0.12;
+    glow.style.transform = `translate(${gx}px, ${gy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+
+  /* ---------- Particles ---------- */
+  const particlesEl = document.getElementById('particles');
+  const particleCount = window.innerWidth < 760 ? 14 : 30;
+  for(let i=0; i<particleCount; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100 + '%';
+    p.style.bottom = '-10px';
+    p.style.animationDuration = (8 + Math.random()*10) + 's';
+    p.style.animationDelay = (Math.random()*10) + 's';
+    p.style.opacity = (0.3 + Math.random()*0.5).toFixed(2);
+    particlesEl.appendChild(p);
+  }
+
+  /* ---------- Scroll Reveal (Intersection Observer) ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach((el, i) => {
+    el.style.transitionDelay = (i % 6) * 0.07 + 's';
+    io.observe(el);
+  });
+
+  /* ---------- Button Ripple ---------- */
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+    });
+  });
+
+  /* ---------- Countdown Timers ---------- */
+  function startCountdown(hEl,mEl,sEl, hoursFromNow){
+    const target = new Date().getTime() + hoursFromNow * 3600 * 1000;
+    function tick(){
+      const now = new Date().getTime();
+      let diff = Math.max(0, target - now);
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      hEl.textContent = String(h).padStart(2,'0');
+      mEl.textContent = String(m).padStart(2,'0');
+      sEl.textContent = String(s).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+  startCountdown(
+    document.getElementById('c1-h'), document.getElementById('c1-m'), document.getElementById('c1-s'), 18
+  );
+  startCountdown(
+    document.getElementById('c2-h'), document.getElementById('c2-m'), document.getElementById('c2-s'), 46
+  );
+
+  /* ---------- Newsletter Form ---------- */
+  const form = document.getElementById('newsletterForm');
+  const formMsg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value.trim();
+    if(email){
+      formMsg.textContent = "You're in! Check your inbox for your 10% off code.";
+      form.reset();
+      setTimeout(() => formMsg.textContent = '', 5000);
+    }
+  });
+
+  /* ---------- Smooth scroll for in-page anchors ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e){
+      const targetId = this.getAttribute('href');
+      if(targetId.length > 1){
+        const target = document.querySelector(targetId);
+        if(target){
+          e.preventDefault();
+          const offset = 90;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior:'smooth' });
+        }
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spice Garden Restaurant — Fine Dining, Redefined</title>
+<meta name="description" content="Spice Garden Restaurant — an elevated dining experience. Book your table today.">
+<meta name="theme-color" content="#150E0C">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #150E0C;
+    --bg-2: #1D1310;
+    --maroon: #7A2331;
+    --maroon-2: #9C2F3F;
+    --gold: #E3A857;
+    --gold-2: #C98A3E;
+    --cream: #F3E9DD;
+    --text: #F3E9DD;
+    --text-dim: #B9A794;
+    --glass: rgba(255,255,255,0.045);
+    --glass-border: rgba(227,168,87,0.16);
+    --glass-strong: rgba(255,255,255,0.08);
+    --radius: 20px;
+    --grad: linear-gradient(120deg, var(--maroon), var(--gold-2));
+    --grad-btn: linear-gradient(120deg, var(--gold-2), var(--gold));
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+  body.locked{ overflow: hidden; height: 100vh; }
+
+  h1,h2,h3,h4{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+
+  ::selection{ background: var(--gold); color: #1A0F0A; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- Ambient background ---------- */
+  .bg-orbs{ position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .orb{ position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.32; }
+  .orb-1{ width: 480px; height: 480px; background: var(--maroon); top: -120px; left: -100px; animation: float1 22s ease-in-out infinite; }
+  .orb-2{ width: 420px; height: 420px; background: var(--gold); bottom: 10%; right: -120px; animation: float2 26s ease-in-out infinite; opacity: 0.18; }
+  .orb-3{ width: 320px; height: 320px; background: #B24A5A; top: 45%; left: 45%; animation: float3 30s ease-in-out infinite; opacity: 0.16; }
+
+  @keyframes float1{ 0%,100%{ transform: translate(0,0);} 50%{ transform: translate(60px, 80px);} }
+  @keyframes float2{ 0%,100%{ transform: translate(0,0);} 50%{ transform: translate(-70px, -50px);} }
+  @keyframes float3{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-40px, 40px) scale(1.15);} }
+
+  .cursor-glow{
+    position: fixed; width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(227,168,87,0.14), rgba(122,35,49,0.07) 45%, transparent 70%);
+    pointer-events: none; z-index: 1; transform: translate(-50%,-50%);
+    transition: opacity 0.3s ease; will-change: transform;
+  }
+
+  #page{ position: relative; z-index: 2; transform-origin: top center; transition: transform 0.35s cubic-bezier(.2,.9,.3,1.3); }
+
+  /* ---------- Splash Screen ---------- */
+  #splash{
+    position: fixed; inset: 0; z-index: 9999;
+    background: radial-gradient(circle at 50% 40%, #241713 0%, var(--bg) 70%);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s ease;
+  }
+  #splash.hide{
+    opacity: 0;
+    filter: blur(24px);
+    transform: scale(1.06);
+    pointer-events: none;
+  }
+  .splash-inner{ text-align: center; padding: 24px; }
+  .splash-mark{
+    width: 84px; height: 84px; margin: 0 auto 22px;
+    border-radius: 22px;
+    background: var(--grad-btn);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.3rem;
+    animation: splashSpin 3.2s ease-in-out infinite;
+    box-shadow: 0 20px 50px -10px rgba(227,168,87,0.4);
+  }
+  @keyframes splashSpin{ 0%,100%{ transform: rotate(-8deg);} 50%{ transform: rotate(8deg);} }
+  .splash-inner h1{
+    font-size: clamp(1.9rem, 5vw, 3.1rem);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: splashFadeUp 0.9s ease 0.15s forwards;
+  }
+  .splash-inner p{
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: splashFadeUp 0.9s ease 0.35s forwards;
+  }
+  @keyframes splashFadeUp{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
+  .splash-loader{
+    width: 200px; height: 3px; margin: 30px auto 0;
+    background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden;
+  }
+  .splash-bar{
+    height: 100%; width: 0%;
+    background: var(--grad-btn);
+    border-radius: 10px;
+    animation: splashLoad 2.1s ease forwards;
+  }
+  @keyframes splashLoad{ to{ width: 100%; } }
+
+  /* ---------- Utility ---------- */
+  .container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 14px;
+  }
+  .eyebrow::before{ content: ''; width: 24px; height: 1.5px; background: var(--grad); }
+  .section-title{ font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 16px; line-height: 1.1; }
+  .section-sub{ color: var(--text-dim); max-width: 560px; font-size: 1.02rem; line-height: 1.7; }
+  .grad-text{ background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  section{ position: relative; padding: 120px 0; }
+
+  .glass{
+    background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-radius: var(--radius);
+  }
+
+  .reveal{ opacity: 0; transform: translateY(36px); transition: opacity 0.8s cubic-bezier(.2,.8,.2,1), transform 0.8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .reveal-delay-1{ transition-delay: 0.1s; }
+  .reveal-delay-2{ transition-delay: 0.2s; }
+  .reveal-delay-3{ transition-delay: 0.3s; }
+  .reveal-delay-4{ transition-delay: 0.4s; }
+  .reveal-delay-5{ transition-delay: 0.5s; }
+
+  .btn{
+    display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px;
+    border-radius: 100px; font-weight: 700; font-size: 0.95rem;
+    transition: transform 0.35s cubic-bezier(.2,.9,.3,1.3), box-shadow 0.35s ease, background 0.35s ease;
+  }
+  .btn-primary{ background: var(--grad-btn); color: #1A0F0A; }
+  .btn-primary:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 34px -10px rgba(227,168,87,0.5); }
+  .btn-ghost{ background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--text); }
+  .btn-ghost:hover{ background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+
+  /* ---------- Navbar ---------- */
+  .navbar{ position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 0; transition: background 0.4s ease, padding 0.4s ease, border-color 0.4s ease; border-bottom: 1px solid transparent; }
+  .navbar.scrolled{ background: rgba(21,14,12,0.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 12px 0; border-bottom: 1px solid var(--glass-border); }
+  .nav-inner{ display: flex; align-items: center; justify-content: space-between; }
+  .logo{ font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; gap: 10px; letter-spacing: 0.01em; }
+  .logo-mark{ width: 38px; height: 38px; border-radius: 10px; background: var(--grad-btn); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .nav-links{ display: flex; gap: 36px; font-size: 0.92rem; font-weight: 600; color: var(--text-dim); }
+  .nav-links a{ position: relative; padding: 4px 0; transition: color 0.3s ease; }
+  .nav-links a::after{ content:''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 2px; background: var(--grad); transition: width 0.3s ease; }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-links a:hover::after{ width: 100%; }
+  .nav-cta{ display: flex; align-items: center; gap: 18px; }
+  .nav-cta .btn{ padding: 11px 22px; font-size: 0.85rem; }
+  .hamburger{ display: none; flex-direction: column; gap: 5px; width: 26px; z-index: 200; }
+  .hamburger span{ height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s ease; }
+  .hamburger.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2){ opacity: 0; }
+  .hamburger.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  /* ---------- Hero ---------- */
+  .hero{ min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 140px 24px 80px; }
+  .hero-tag{ display: inline-flex; align-items: center; gap: 9px; padding: 9px 18px; border-radius: 100px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 30px; color: var(--gold); }
+  .hero-tag .dot{ width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); animation: pulse 1.8s infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+  .hero h1{ font-size: clamp(2.8rem, 8vw, 6.4rem); line-height: 1.02; margin-bottom: 26px; max-width: 1000px; }
+  .hero h1 em{ font-style: italic; font-weight: 500; }
+  .hero-tagline{ font-size: clamp(1rem, 1.6vw, 1.25rem); color: var(--text-dim); max-width: 560px; margin: 0 auto 44px; line-height: 1.7; }
+  .hero-cta{ display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 70px; }
+  .hero-stats{ display: flex; gap: 50px; justify-content: center; flex-wrap: wrap; }
+  .hero-stat b{ font-family: 'Fraunces', serif; font-size: 1.9rem; display: block; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero-stat span{ font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  .scroll-cue{ position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-dim); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .scroll-cue .line{ width: 1px; height: 34px; background: linear-gradient(var(--gold), transparent); animation: scrollLine 1.8s infinite; }
+  @keyframes scrollLine{ 0%{ transform: scaleY(0); transform-origin: top;} 50%{ transform: scaleY(1); transform-origin: top;} 51%{ transform-origin: bottom;} 100%{ transform: scaleY(0); transform-origin: bottom;} }
+
+  /* ---------- About ---------- */
+  .about-grid{ display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 70px; align-items: center; }
+  .about-features{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+  .about-feature{ padding: 20px; border-radius: 14px; }
+  .about-feature .num{ font-size: 1.5rem; margin-bottom: 6px; }
+  .about-feature p{ font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+  .about-feature h4{ font-size: 0.95rem; margin-bottom: 4px; font-family: 'Manrope',sans-serif; font-weight: 700; }
+
+  /* ---- Signature element: rotating pan with a cooking dish + steam ---- */
+  .about-visual{
+    position: relative; aspect-ratio: 1/1.05; border-radius: 28px;
+    background: linear-gradient(155deg, rgba(122,35,49,0.24), rgba(227,168,87,0.08));
+    border: 1px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .about-visual::before{
+    content: ''; position: absolute; width: 220%; height: 220%;
+    background: conic-gradient(from 0deg, var(--maroon), var(--gold), #B24A5A, var(--maroon));
+    opacity: 0.14; animation: spin 18s linear infinite;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+  .pan-rig{ position: relative; z-index: 2; width: 68%; aspect-ratio: 1; display:flex; align-items:center; justify-content:center; }
+  .steam{ position: absolute; bottom: 62%; width: 10px; height: 46px; border-radius: 50%; background: linear-gradient(to top, rgba(243,233,221,0.5), transparent); filter: blur(4px); opacity: 0; }
+  .steam-1{ left: 38%; animation: steamRise 3.4s ease-in infinite; }
+  .steam-2{ left: 50%; animation: steamRise 3.4s ease-in 1.1s infinite; }
+  .steam-3{ left: 62%; animation: steamRise 3.4s ease-in 2.2s infinite; }
+  @keyframes steamRise{ 0%{ opacity:0; transform: translateY(0) scale(1);} 20%{ opacity:0.55;} 100%{ opacity:0; transform: translateY(-60px) scale(1.6);} }
+
+  .pan{
+    position: relative; width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #3E2C22 0%, #17100C 72%);
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.65), 0 24px 55px -10px rgba(0,0,0,0.55), 0 0 0 6px rgba(227,168,87,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pan::after{
+    content: ''; position: absolute; right: -34%; top: 46%; width: 42%; height: 12%;
+    background: linear-gradient(90deg, #2A1D16, #3E2C22); border-radius: 8px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  }
+  .dish{
+    width: 74%; height: 74%; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    animation: dishSpin 10s linear infinite;
+  }
+  @keyframes dishSpin{ to{ transform: rotate(360deg); } }
+  .dish-plate{
+    position: relative; width: 100%; height: 100%; border-radius: 50%;
+    background: conic-gradient(from 0deg, #8C4A2A, #C98A3E, #7A2331, #C98A3E, #8C4A2A);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(227,168,87,0.25);
+  }
+  .dish-plate span{
+    position: absolute; font-size: 1.4rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    animation: counterSpin 10s linear infinite;
+  }
+  @keyframes counterSpin{ to{ transform: rotate(-360deg); } }
+  .dish-plate span:nth-child(1){ top: 6%; left: 50%; transform: translateX(-50%); }
+  .dish-plate span:nth-child(2){ top: 50%; right: 4%; transform: translateY(-50%); }
+  .dish-plate span:nth-child(3){ bottom: 6%; left: 50%; transform: translateX(-50%); }
+  .dish-plate span:nth-child(4){ top: 50%; left: 4%; transform: translateY(-50%); }
+  .dish-center{
+    position: relative; z-index: 2; width: 40%; height: 40%; border-radius: 50%;
+    background: rgba(21,14,12,0.65); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; font-size: 1.9rem;
+    border: 1px solid rgba(227,168,87,0.25);
+  }
+
+  /* ---------- Menu ---------- */
+  .menu-tabs{ display: flex; justify-content: center; gap: 12px; margin: 44px 0 40px; flex-wrap: wrap; }
+  .menu-tab{
+    padding: 13px 26px; border-radius: 100px; font-weight: 700; font-size: 0.9rem;
+    color: var(--text-dim); border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);
+    transition: background 0.35s ease, color 0.35s ease, transform 0.3s cubic-bezier(.2,.9,.3,1.3), border-color 0.35s ease;
+  }
+  .menu-tab.active{ color: #1A0F0A; background: var(--grad-btn); border-color: transparent; }
+  .menu-tab:hover:not(.active){ color: var(--text); background: rgba(255,255,255,0.07); transform: translateY(-2px) scale(1.06); }
+  .menu-tab.active:hover{ transform: translateY(-2px) scale(1.06); }
+
+  .menu-viewport{ overflow: hidden; margin: 0 -24px; padding: 10px 0; }
+  .menu-category{ display: none; }
+  .menu-category.active{ display: block; }
+  .menu-track{
+    display: flex; gap: 22px; width: max-content; padding: 0 24px;
+    animation: marqueeRTL 42s linear infinite;
+  }
+  .menu-track:hover{ animation-play-state: paused; }
+  @keyframes marqueeRTL{ from{ transform: translateX(-50%); } to{ transform: translateX(0%); } }
+
+  .menu-card{
+    width: 300px; flex: 0 0 auto; padding: 28px; cursor: pointer;
+    transition: transform 0.4s cubic-bezier(.2,.9,.3,1.3), border-color 0.4s ease, background 0.4s ease, box-shadow .4s ease;
+    position: relative;
+  }
+  .menu-card:hover{
+    transform: translateY(-8px) scale(1.06); border-color: rgba(227,168,87,0.45);
+    background: rgba(255,255,255,0.07); box-shadow: 0 24px 50px -18px rgba(227,168,87,0.35);
+    z-index: 5;
+  }
+  .menu-card:active{ transform: translateY(-6px) scale(1.12); }
+  .menu-card-top{ display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .menu-icon{ font-size: 2.1rem; width: 58px; height: 58px; border-radius: 14px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; }
+  .menu-price{ font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--gold); white-space: nowrap; }
+  .menu-card h4{ font-size: 1.12rem; margin-bottom: 8px; font-family: 'Manrope', sans-serif; font-weight: 800; }
+  .menu-card p{ font-size: 0.87rem; color: var(--text-dim); line-height: 1.6; }
+  .menu-card .tap-hint{ margin-top: 14px; font-size: 0.74rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; }
+
+  /* Menu item modal */
+  .menu-modal-overlay{
+    position: fixed; inset: 0; z-index: 300; background: rgba(10,6,4,0.78);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+  }
+  .menu-modal-overlay.active{ opacity: 1; pointer-events: auto; }
+  .menu-modal{
+    background: var(--bg-2); border: 1px solid var(--glass-border); border-radius: 26px;
+    max-width: 460px; width: 100%; padding: 40px; position: relative;
+    transform: scale(0.88) translateY(24px); transition: transform 0.4s cubic-bezier(.2,.9,.3,1.3);
+  }
+  .menu-modal-overlay.active .menu-modal{ transform: scale(1) translateY(0); }
+  .modal-close{
+    position: absolute; top: 18px; right: 18px; width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .modal-close:hover{ background: rgba(255,255,255,0.14); transform: rotate(90deg); }
+  .modal-icon{
+    width: 84px; height: 84px; border-radius: 22px; font-size: 2.6rem;
+    background: var(--grad); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .menu-modal h3{ font-size: 1.6rem; margin-bottom: 8px; }
+  .modal-price{ font-family: 'Fraunces', serif; color: var(--gold); font-size: 1.3rem; margin-bottom: 18px; }
+  .modal-desc{ color: var(--text-dim); font-size: 0.95rem; line-height: 1.75; margin-bottom: 28px; }
+  .modal-order-btn{ width: 100%; justify-content: center; }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid{ display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; gap: 18px; }
+  .gallery-item{
+    border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.6rem; position: relative; overflow: hidden; border: 1px solid var(--glass-border);
+    transition: transform 0.5s cubic-bezier(.2,.9,.3,1.3); cursor: pointer;
+  }
+  .gallery-item:hover{ transform: scale(1.04) rotate(-0.5deg); }
+  .gallery-item img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; transition: transform 0.7s ease, filter 0.5s ease; }
+  .gallery-item:hover img{ transform: scale(1.1) rotate(-1deg); filter: brightness(1.08); }
+  .gallery-item span{ position: relative; z-index: 1; filter: drop-shadow(0 8px 18px rgba(0,0,0,0.4)); }
+  .gallery-item::before{ content:''; position: absolute; inset: 0; opacity: 0.7; z-index: 0; }
+  .gallery-item:nth-child(1){ grid-column: span 2; grid-row: span 2; }
+  .gallery-item:nth-child(4){ grid-column: span 2; }
+  .gallery-item:nth-child(7){ grid-row: span 2; }
+
+  .g1::before{ background: linear-gradient(140deg, var(--maroon), #241713); }
+  .g2::before{ background: linear-gradient(140deg, var(--gold), #241713); }
+  .g3::before{ background: linear-gradient(140deg, #B24A5A, #1D1310); }
+  .g4::before{ background: linear-gradient(140deg, var(--gold-2), #17100C); }
+  .g5::before{ background: linear-gradient(140deg, var(--maroon), var(--gold)); }
+  .g6::before{ background: linear-gradient(140deg, #C98A3E, #1D1310); }
+  .g7::before{ background: linear-gradient(140deg, var(--maroon-2), #17100C); }
+  .g8::before{ background: linear-gradient(140deg, var(--gold), #241713); }
+
+  /* ---------- Testimonials ---------- */
+  .testi-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testi-card{ padding: 32px; transition: transform 0.4s cubic-bezier(.2,.9,.3,1.3), border-color 0.4s ease; }
+  .testi-card:hover{ transform: translateY(-8px); border-color: rgba(227,168,87,0.4); }
+  .stars{ color: var(--gold); font-size: 0.95rem; margin-bottom: 16px; letter-spacing: 2px; }
+  .testi-text{ color: var(--text-dim); font-size: 0.94rem; line-height: 1.75; margin-bottom: 24px; }
+  .testi-person{ display: flex; align-items: center; gap: 14px; }
+  .testi-avatar{ width: 46px; height: 46px; border-radius: 50%; background: var(--grad-btn); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #1A0F0A; font-family: 'Fraunces', serif; }
+  .testi-person h5{ font-size: 0.92rem; margin-bottom: 2px; }
+  .testi-person span{ font-size: 0.78rem; color: var(--text-dim); }
+
+  /* ---------- Find Us ---------- */
+  .find-grid{ display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: stretch; }
+  .find-info{ padding: 40px; display: flex; flex-direction: column; gap: 26px; justify-content: center; }
+  .find-row{ display: flex; gap: 18px; align-items: flex-start; }
+  .find-icon{ width: 46px; height: 46px; border-radius: 12px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem; }
+  .find-row h4{ font-size: 1rem; margin-bottom: 4px; font-family: 'Manrope',sans-serif; font-weight: 800; }
+  .find-row p{ font-size: 0.87rem; color: var(--text-dim); line-height: 1.6; }
+  .map-embed{ border-radius: var(--radius); overflow: hidden; min-height: 380px; position: relative; border: 1px solid var(--glass-border); }
+  .map-embed iframe{ width: 100%; height: 100%; min-height: 380px; border: 0; filter: grayscale(0.4) sepia(0.25) hue-rotate(-10deg) invert(0.9) contrast(0.9); }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{ text-align: center; padding: 100px 24px; }
+  .final-cta-box{ max-width: 780px; margin: 0 auto; padding: 70px 40px; border-radius: 32px; background: linear-gradient(155deg, rgba(122,35,49,0.22), rgba(227,168,87,0.1)); position: relative; overflow: hidden; }
+  .final-cta-box h2{ font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 18px; }
+  .final-cta-box p{ color: var(--text-dim); margin-bottom: 36px; }
+
+  /* ---------- Footer ---------- */
+  footer{ padding: 70px 0 30px; border-top: 1px solid var(--glass-border); }
+  .footer-grid{ display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+  .footer-brand p{ color: var(--text-dim); font-size: 0.88rem; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+  .footer-col h5{ font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; color: var(--text); }
+  .footer-col a{ display: block; color: var(--text-dim); font-size: 0.9rem; margin-bottom: 12px; transition: color 0.3s ease, transform 0.3s ease; }
+  .footer-col a:hover{ color: var(--gold); transform: translateX(3px); }
+  .social-row{ display: flex; gap: 12px; margin-top: 18px; }
+  .social-icon{ width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.35s ease; }
+  .social-icon:hover{ background: var(--grad-btn); transform: translateY(-4px); color: #1A0F0A; }
+  .footer-bottom{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding-top: 26px; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.82rem; }
+
+  /* ---------- WhatsApp floating button ---------- */
+  .wa-float{
+    position: fixed; bottom: 26px; right: 26px; width: 58px; height: 58px; border-radius: 50%;
+    background: linear-gradient(140deg, #25D366, #128C7E); display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; z-index: 90; box-shadow: 0 10px 30px -6px rgba(37,211,102,0.6);
+    animation: floatBtn 3s ease-in-out infinite;
+  }
+  .wa-float:hover{ transform: scale(1.1); }
+  @keyframes floatBtn{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .about-grid, .find-grid{ grid-template-columns: 1fr; }
+    .testi-grid{ grid-template-columns: repeat(2, 1fr); }
+    .footer-grid{ grid-template-columns: 1fr 1fr; }
+    .gallery-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 760px){
+    .nav-links, .nav-cta .btn-ghost{ display: none; }
+    .hamburger{ display: flex; }
+    .nav-links.mobile-open{ display: flex; position: fixed; inset: 0; flex-direction: column; background: rgba(21,14,12,0.98); align-items: center; justify-content: center; gap: 34px; font-size: 1.3rem; }
+    section{ padding: 80px 0; }
+    .about-features{ grid-template-columns: 1fr; }
+    .testi-grid{ grid-template-columns: 1fr; }
+    .find-info{ padding: 28px; }
+    .footer-grid{ grid-template-columns: 1fr 1fr; gap: 30px; }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
+    .gallery-item:nth-child(1){ grid-column: span 2; grid-row: span 1; }
+    .cursor-glow{ display: none; }
+    .hero-stats{ gap: 30px; }
+    .menu-card{ width: 260px; }
+  }
+</style>
+</head>
+<body class="locked">
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-inner">
+    <div class="splash-mark">🍽️</div>
+    <h1>Welcome to <span class="grad-text">Spice Garden</span></h1>
+    <p>Setting your table…</p>
+    <div class="splash-loader"><div class="splash-bar"></div></div>
+  </div>
+</div>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div id="page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="logo"><span class="logo-mark">🍽️</span>Spice Garden</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#menu" class="nav-link">Menu</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+        <li><a href="#find-us" class="nav-link">Find Us</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://wa.me/918727003429?text=Hi%2C%20I%27d%20like%20to%20book%20a%20table%20at%20Spice%20Garden" target="_blank" class="btn btn-ghost">Book Table</a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-tag"><span class="dot"></span> Open Today · 11 AM – 11 PM</div>
+      <h1>Flavour, plated <br><em>with intention.</em></h1>
+      <p class="hero-tagline">Spice Garden Restaurant brings together modern technique and honest, home-grown ingredients — a table worth returning to, in the heart of Ludhiana.</p>
+      <div class="hero-cta">
+        <a href="https://wa.me/918727003429?text=Hi%2C%20I%27d%20like%20to%20book%20a%20table%20at%20Spice%20Garden" target="_blank" class="btn btn-primary">💬 Book a Table on WhatsApp</a>
+        <a href="#menu" class="btn btn-ghost">View Menu</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>12+</b><span>Years Serving</span></div>
+        <div class="hero-stat"><b>4.8★</b><span>Average Rating</span></div>
+        <div class="hero-stat"><b>40+</b><span>Signature Dishes</span></div>
+      </div>
+    </div>
+    <div class="scroll-cue"><span>Scroll</span><div class="line"></div></div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container about-grid">
+      <div class="reveal">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="section-title">A kitchen built on <span class="grad-text">patience</span> & good produce.</h2>
+        <p class="section-sub">Since opening our doors, Spice Garden has stayed close to one idea: cook thoughtfully, source honestly, and never rush a plate. Every dish on our menu is built from recipes refined over years, served in a space designed to slow you down.</p>
+        <div class="about-features">
+          <div class="about-feature glass">
+            <div class="num">🌿</div>
+            <h4>Fresh Daily</h4>
+            <p>Ingredients sourced every morning from local markets.</p>
+          </div>
+          <div class="about-feature glass">
+            <div class="num">👨‍🍳</div>
+            <h4>Chef-Led</h4>
+            <p>Every dish personally curated by our head chef.</p>
+          </div>
+          <div class="about-feature glass">
+            <div class="num">🕯️</div>
+            <h4>Warm Space</h4>
+            <p>An ambience designed for long, unhurried dinners.</p>
+          </div>
+          <div class="about-feature glass">
+            <div class="num">📖</div>
+            <h4>Family Recipes</h4>
+            <p>Rooted in tradition, plated with a modern hand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal reveal-delay-2">
+        <div class="pan-rig">
+          <div class="steam steam-1"></div>
+          <div class="steam steam-2"></div>
+          <div class="steam steam-3"></div>
+          <div class="pan">
+            <div class="dish">
+              <div class="dish-plate">
+                <span>🌶️</span><span>🌿</span><span>🍅</span><span>🧄</span>
+                <div class="dish-center">🍲</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">The Menu</span>
+        <h2 class="section-title">Handpicked, <span class="grad-text">course by course.</span></h2>
+        <p class="section-sub">From sharp starters to slow-cooked mains and desserts worth saving room for. Hover to look closer, tap a dish to see the full plate and order.</p>
+      </div>
+
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-cat="starters">Starters</button>
+        <button class="menu-tab" data-cat="mains">Main Course</button>
+        <button class="menu-tab" data-cat="desserts">Desserts</button>
+      </div>
+
+      <div class="menu-viewport">
+        <div class="menu-category active" id="starters">
+          <div class="menu-track">
+            <div class="menu-card glass" data-name="Tandoori Momos" data-price="220" data-icon="🥟" data-desc="Steamed dumplings finished on the tandoor, tossed in smoked chilli glaze." data-detail="Hand-folded dumplings steamed first, then finished over live tandoor coals for a smoky char, tossed tableside in a sesame-chilli glaze. Served with mint chutney.">
+              <div class="menu-card-top"><div class="menu-icon">🥟</div><div class="menu-price">₹220</div></div>
+              <h4>Tandoori Momos</h4>
+              <p>Steamed dumplings finished on the tandoor, tossed in smoked chilli glaze.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Paneer Tikka Skewers" data-price="280" data-icon="🍢" data-desc="Charcoal-grilled cottage cheese marinated in yogurt and Kashmiri spice." data-detail="Cottage cheese marinated overnight in hung yogurt, Kashmiri chilli and carom seed, skewered with peppers and onion, and grilled over charcoal for a smoky edge.">
+              <div class="menu-card-top"><div class="menu-icon">🍢</div><div class="menu-price">₹280</div></div>
+              <h4>Paneer Tikka Skewers</h4>
+              <p>Charcoal-grilled cottage cheese marinated in yogurt and Kashmiri spice.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Chilli Garlic Prawns" data-price="340" data-icon="🍤" data-desc="Pan-seared prawns in a fiery garlic-soy reduction, curry leaf tempered." data-detail="Fresh prawns seared hot and fast, finished in a garlic-soy reduction with crushed Kashmiri chilli, and tempered with curry leaf and mustard seed just before plating.">
+              <div class="menu-card-top"><div class="menu-icon">🍤</div><div class="menu-price">₹340</div></div>
+              <h4>Chilli Garlic Prawns</h4>
+              <p>Pan-seared prawns in a fiery garlic-soy reduction, curry leaf tempered.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Roasted Beet Salad" data-price="190" data-icon="🥗" data-desc="Beet, feta, candied walnut, and citrus over rocket leaves." data-detail="Slow-roasted beets, whipped feta and candied walnut over peppery rocket, finished with a citrus-honey dressing. Light, bright, and a good counterpoint to the grill dishes.">
+              <div class="menu-card-top"><div class="menu-icon">🥗</div><div class="menu-price">₹190</div></div>
+              <h4>Roasted Beet Salad</h4>
+              <p>Beet, feta, candied walnut, and citrus over rocket leaves.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Sweet Corn Soup" data-price="210" data-icon="🍜" data-desc="Classic comfort — velvety corn broth with crisp spring onion." data-detail="A slow-built vegetable stock, sweet corn kernels blended smooth and finished with a touch of cream, topped with crisp spring onion and cracked pepper.">
+              <div class="menu-card-top"><div class="menu-icon">🍜</div><div class="menu-price">₹210</div></div>
+              <h4>Sweet Corn Soup</h4>
+              <p>Classic comfort — velvety corn broth with crisp spring onion.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Crispy Corn Kebab" data-price="230" data-icon="🧆" data-desc="Golden fried corn and potato kebab with a mint-yogurt dip." data-detail="Sweet corn and potato bound with roasted spice, shaped by hand and fried to a golden crust, served with a cooling mint-yogurt dip.">
+              <div class="menu-card-top"><div class="menu-icon">🧆</div><div class="menu-price">₹230</div></div>
+              <h4>Crispy Corn Kebab</h4>
+              <p>Golden fried corn and potato kebab with a mint-yogurt dip.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category" id="mains">
+          <div class="menu-track">
+            <div class="menu-card glass" data-name="Butter Chicken" data-price="420" data-icon="🍛" data-desc="Slow-simmered tomato gravy, char-grilled chicken, a house classic." data-detail="Our founding dish. Chicken marinated overnight, char-grilled in the tandoor, then finished in a slow-simmered tomato and cashew gravy with a spoon of butter at the end.">
+              <div class="menu-card-top"><div class="menu-icon">🍛</div><div class="menu-price">₹420</div></div>
+              <h4>Butter Chicken</h4>
+              <p>Slow-simmered tomato gravy, char-grilled chicken, a house classic.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Mutton Rogan Josh" data-price="460" data-icon="🍖" data-desc="Kashmiri-style slow braise with aromatic whole spices." data-detail="Mutton braised low and slow for hours with whole Kashmiri chillies, fennel and ginger powder, in the traditional Rogan Josh style. Best mopped up with a fresh naan.">
+              <div class="menu-card-top"><div class="menu-icon">🍖</div><div class="menu-price">₹460</div></div>
+              <h4>Mutton Rogan Josh</h4>
+              <p>Kashmiri-style slow braise with aromatic whole spices.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Truffle Alfredo Pasta" data-price="360" data-icon="🍝" data-desc="Creamy parmesan sauce, wild mushroom, black truffle oil." data-detail="Fresh pasta tossed in a parmesan cream sauce with sautéed wild mushroom, finished tableside with a drizzle of black truffle oil.">
+              <div class="menu-card-top"><div class="menu-icon">🍝</div><div class="menu-price">₹360</div></div>
+              <h4>Truffle Alfredo Pasta</h4>
+              <p>Creamy parmesan sauce, wild mushroom, black truffle oil.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Hyderabadi Biryani" data-price="340" data-icon="🍚" data-desc="Layered basmati, saffron, slow-dum cooked with tender meat." data-detail="Aged basmati and marinated meat layered by hand, sealed and slow-cooked on dum, finished with saffron milk and fried onion. Served with raita and mirchi ka salan.">
+              <div class="menu-card-top"><div class="menu-icon">🍚</div><div class="menu-price">₹340</div></div>
+              <h4>Hyderabadi Biryani</h4>
+              <p>Layered basmati, saffron, slow-dum cooked with tender meat.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Paneer Lababdar" data-price="310" data-icon="🧈" data-desc="Cottage cheese in a rich cashew-tomato gravy, finished with cream." data-detail="House-made paneer simmered in a rich cashew and tomato gravy, layered with butter and cream, finished with a touch of kasuri methi.">
+              <div class="menu-card-top"><div class="menu-icon">🧈</div><div class="menu-price">₹310</div></div>
+              <h4>Paneer Lababdar</h4>
+              <p>Cottage cheese in a rich cashew-tomato gravy, finished with cream.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Wood-Fired Margherita" data-price="390" data-icon="🍕" data-desc="San Marzano tomato, fresh mozzarella, basil, stone-baked." data-detail="Hand-stretched dough, San Marzano tomato, fresh mozzarella and basil, fired on stone at high heat for a blistered, smoky crust.">
+              <div class="menu-card-top"><div class="menu-icon">🍕</div><div class="menu-price">₹390</div></div>
+              <h4>Wood-Fired Margherita</h4>
+              <p>San Marzano tomato, fresh mozzarella, basil, stone-baked.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category" id="desserts">
+          <div class="menu-track">
+            <div class="menu-card glass" data-name="Classic Crème Brûlée" data-price="160" data-icon="🍮" data-desc="Vanilla custard, torched sugar crust, served chilled." data-detail="Slow-baked vanilla bean custard, chilled overnight, topped with a layer of sugar torched to order for that first-crack crust.">
+              <div class="menu-card-top"><div class="menu-icon">🍮</div><div class="menu-price">₹160</div></div>
+              <h4>Classic Crème Brûlée</h4>
+              <p>Vanilla custard, torched sugar crust, served chilled.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Molten Chocolate Cake" data-price="190" data-icon="🍫" data-desc="Warm dark chocolate lava cake with vanilla bean ice cream." data-detail="Dark chocolate cake baked to order so the centre stays molten, served warm alongside a scoop of vanilla bean ice cream.">
+              <div class="menu-card-top"><div class="menu-icon">🍫</div><div class="menu-price">₹190</div></div>
+              <h4>Molten Chocolate Cake</h4>
+              <p>Warm dark chocolate lava cake with vanilla bean ice cream.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Gulab Jamun Sundae" data-price="150" data-icon="🍨" data-desc="Traditional gulab jamun paired with saffron ice cream." data-detail="Soft, syrup-soaked gulab jamun paired with house-churned saffron ice cream and a scatter of toasted nuts — an old favourite, reimagined.">
+              <div class="menu-card-top"><div class="menu-icon">🍨</div><div class="menu-price">₹150</div></div>
+              <h4>Gulab Jamun Sundae</h4>
+              <p>Traditional gulab jamun paired with saffron ice cream.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Blueberry Cheesecake" data-price="210" data-icon="🍰" data-desc="Baked New York-style cheesecake, wild blueberry compote." data-detail="Dense, baked New York-style cheesecake on a buttery biscuit base, finished with a wild blueberry compote made in-house.">
+              <div class="menu-card-top"><div class="menu-icon">🍰</div><div class="menu-price">₹210</div></div>
+              <h4>Blueberry Cheesecake</h4>
+              <p>Baked New York-style cheesecake, wild blueberry compote.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Pistachio Kulfi" data-price="140" data-icon="🧁" data-desc="House-churned kulfi with roasted pistachio and cardamom." data-detail="Milk reduced slowly for hours, folded with roasted pistachio and green cardamom, then set the traditional way for a dense, creamy kulfi.">
+              <div class="menu-card-top"><div class="menu-icon">🧁</div><div class="menu-price">₹140</div></div>
+              <h4>Pistachio Kulfi</h4>
+              <p>House-churned kulfi with roasted pistachio and cardamom.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+            <div class="menu-card glass" data-name="Baked Rasmalai Tart" data-price="170" data-icon="🥮" data-desc="Flaky tart shell, saffron rasmalai cream, pistachio dust." data-detail="A flaky butter tart shell filled with saffron-infused rasmalai cream, chilled and finished with a dust of crushed pistachio.">
+              <div class="menu-card-top"><div class="menu-icon">🥮</div><div class="menu-price">₹170</div></div>
+              <h4>Baked Rasmalai Tart</h4>
+              <p>Flaky tart shell, saffron rasmalai cream, pistachio dust.</p>
+              <div class="tap-hint">Tap for details</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU ITEM MODAL -->
+  <div class="menu-modal-overlay" id="menuModalOverlay">
+    <div class="menu-modal">
+      <div class="modal-close" id="modalClose">✕</div>
+      <div class="modal-icon" id="modalIcon">🍽️</div>
+      <h3 id="modalName">Dish Name</h3>
+      <div class="modal-price" id="modalPrice">₹000</div>
+      <p class="modal-desc" id="modalDesc">Description</p>
+      <a href="#" target="_blank" class="btn btn-primary modal-order-btn" id="modalOrderBtn">💬 Order on WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Gallery</span>
+        <h2 class="section-title">A taste of the <span class="grad-text">table.</span></h2>
+        <p class="section-sub">A few frames from the kitchen and the dining room — the moments between the courses.</p>
+      </div>
+      <div class="gallery-grid" style="margin-top:44px;">
+        <div class="gallery-item g1 reveal">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwzec-3spgod1K9iwFl7qzolDfHBNi2Ozf_5KJIUXm1w&s=10" alt="Indian Masala Chaap" loading="lazy" onerror="this.remove()">
+          <span>🍲</span>
+        </div>
+        <div class="gallery-item g2 reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=700&q=80" alt="Wine glass on table" loading="lazy" onerror="this.remove()">
+          <span>🍷</span>
+        </div>
+        <div class="gallery-item g3 reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=700&q=80" alt="Curry dish in copper pan" loading="lazy" onerror="this.remove()">
+          <span>🥘</span>
+        </div>
+        <div class="gallery-item g4 reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=80" alt="Dessert plating" loading="lazy" onerror="this.remove()">
+          <span>🍰</span>
+        </div>
+        <div class="gallery-item g5 reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=700&q=80" alt="Grilled tandoori skewers" loading="lazy" onerror="this.remove()">
+          <span>🍤</span>
+        </div>
+        <div class="gallery-item g6 reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=700&q=80" alt="Biryani rice dish" loading="lazy" onerror="this.remove()">
+          <span>🍛</span>
+        </div>
+        <div class="gallery-item g7 reveal reveal-delay-4">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80" alt="Fresh salad bowl" loading="lazy" onerror="this.remove()">
+          <span>🥗</span>
+        </div>
+        <div class="gallery-item g8 reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=80" alt="Cocktail drink" loading="lazy" onerror="this.remove()">
+          <span>🍹</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Reviews</span>
+        <h2 class="section-title">What our <span class="grad-text">guests say.</span></h2>
+      </div>
+      <div class="testi-grid" style="margin-top:44px;">
+        <div class="testi-card glass reveal">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">Easily the best butter chicken in Ludhiana. The ambience is calm, service is quick, and every dish felt genuinely made with care.</p>
+          <div class="testi-person">
+            <div class="testi-avatar">R</div>
+            <div><h5>Rohit Malhotra</h5><span>Regular Guest</span></div>
+          </div>
+        </div>
+        <div class="testi-card glass reveal reveal-delay-1">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">We booked a table for a family dinner and it exceeded every expectation. The biryani and the desserts especially stood out.</p>
+          <div class="testi-person">
+            <div class="testi-avatar">P</div>
+            <div><h5>Priya Sharma</h5><span>Food Blogger</span></div>
+          </div>
+        </div>
+        <div class="testi-card glass reveal reveal-delay-2">
+          <div class="stars">★★★★☆</div>
+          <p class="testi-text">Lovely spot for a date night — the lighting, the music, the plating. Booking on WhatsApp was quick and hassle-free too.</p>
+          <div class="testi-person">
+            <div class="testi-avatar">A</div>
+            <div><h5>Aman Verma</h5><span>First-time Visitor</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIND US -->
+  <section id="find-us">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Visit Us</span>
+        <h2 class="section-title">Find your way <span class="grad-text">to the table.</span></h2>
+      </div>
+      <div class="find-grid" style="margin-top:44px;">
+        <div class="find-info glass reveal">
+          <div class="find-row">
+            <div class="find-icon">📍</div>
+            <div><h4>Address</h4><p>Model Town Extension, Ferozepur Road, Ludhiana, Punjab – 141002</p></div>
+          </div>
+          <div class="find-row">
+            <div class="find-icon">📞</div>
+            <div><h4>Phone</h4><p>+91 99999 99999</p></div>
+          </div>
+          <div class="find-row">
+            <div class="find-icon">🕒</div>
+            <div><h4>Timing</h4><p>Mon – Sun: 11:00 AM – 11:00 PM</p></div>
+          </div>
+          <div class="find-row">
+            <div class="find-icon">✉️</div>
+            <div><h4>Email</h4><p>hello@spicegarden.example</p></div>
+          </div>
+        </div>
+        <div class="map-embed reveal reveal-delay-1">
+          <iframe
+            src="https://www.google.com/maps?q=Ludhiana,Punjab&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Spice Garden Restaurant Location">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="final-cta-box glass reveal">
+        <span class="eyebrow" style="justify-content:center;">Reserve Now</span>
+        <h2>Your table is <span class="grad-text">one message away.</span></h2>
+        <p>No calls, no waiting — just drop us a WhatsApp and we'll have it ready for you.</p>
+        <a href="https://wa.me/918727003429?text=Hi%2C%20I%27d%20like%20to%20book%20a%20table%20at%20Spice%20Garden" target="_blank" class="btn btn-primary">💬 Book a Table on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo"><span class="logo-mark">🍽️</span>Spice Garden</a>
+          <p>An elevated dining experience rooted in tradition, built for the modern table. Ludhiana, Punjab.</p>
+          <div class="social-row">
+            <a href="https://www.instagram.com/aruvia.digital" target="_blank" class="social-icon">📷</a>
+            <a href="https://wa.me/918727003429" target="_blank" class="social-icon">💬</a>
+            <a href="https://facebook.com" target="_blank" class="social-icon">📘</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Explore</h5>
+          <a href="#about">About Us</a>
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#testimonials">Reviews</a>
+        </div>
+        <div class="footer-col">
+          <h5>Info</h5>
+          <a href="#find-us">Location</a>
+          <a href="tel:+919999999999">Call Us</a>
+          <a href="mailto:hello@spicegarden.example">Email Us</a>
+        </div>
+        <div class="footer-col">
+          <h5>Hours</h5>
+          <a href="#">Mon – Fri: 11 AM – 11 PM</a>
+          <a href="#">Sat – Sun: 10 AM – 12 AM</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Spice Garden Restaurant. All rights reserved.</span>
+        <span>Designed &amp; built with care.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<a href="https://wa.me/918727003429?text=Hi%2C%20I%27d%20like%20to%20book%20a%20table%20at%20Spice%20Garden" target="_blank" class="wa-float" aria-label="Book on WhatsApp">💬</a>
+
+<script>
+  // ---------- Splash screen ----------
+  const splash = document.getElementById('splash');
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      splash.classList.add('hide');
+      document.body.classList.remove('locked');
+      setTimeout(() => { splash.style.display = 'none'; }, 950);
+    }, 2200);
+  });
+
+  // ---------- Navbar scroll state ----------
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ---------- Mobile menu ----------
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('mobile-open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('mobile-open');
+  }));
+
+  // ---------- Cursor glow ----------
+  const glow = document.getElementById('cursorGlow');
+  let gx = window.innerWidth/2, gy = window.innerHeight/2, cx = gx, cy = gy;
+  window.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; });
+  function animateGlow(){
+    cx += (gx - cx) * 0.12;
+    cy += (gy - cy) * 0.12;
+    glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+
+  // ---------- Scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---------- Menu tab switching ----------
+  const tabs = document.querySelectorAll('.menu-tab');
+  const cats = document.querySelectorAll('.menu-category');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      cats.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.cat).classList.add('active');
+    });
+  });
+
+  // ---------- Menu marquee: duplicate cards for seamless loop ----------
+  document.querySelectorAll('.menu-track').forEach(track => {
+    const clones = Array.from(track.children).map(c => c.cloneNode(true));
+    clones.forEach(c => track.appendChild(c));
+  });
+
+  // ---------- Menu item modal ----------
+  const modalOverlay = document.getElementById('menuModalOverlay');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalName = document.getElementById('modalName');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalOrderBtn = document.getElementById('modalOrderBtn');
+  const modalClose = document.getElementById('modalClose');
+
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.menu-card');
+    if (!card) return;
+    card.style.transform = 'translateY(-10px) scale(1.14)';
+    setTimeout(() => { card.style.transform = ''; }, 300);
+
+    const name = card.dataset.name;
+    const price = card.dataset.price;
+    const icon = card.dataset.icon;
+    const detail = card.dataset.detail || card.dataset.desc;
+
+    modalIcon.textContent = icon;
+    modalName.textContent = name;
+    modalPrice.textContent = '₹' + price;
+    modalDesc.textContent = detail;
+    modalOrderBtn.href = `https://wa.me/918727003429?text=${encodeURIComponent(`Hi, I'd like to order ${name} (₹${price}) from Spice Garden.`)}`;
+
+    modalOverlay.classList.add('active');
+    document.body.classList.add('locked');
+  });
+
+  function closeModal(){
+    modalOverlay.classList.remove('active');
+    document.body.classList.remove('locked');
+  }
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // ---------- Page stretch / rubber-band effect at scroll edges ----------
+  const page = document.getElementById('page');
+  let stretchTimeout;
+  function stretch(amount){
+    page.style.transform = `scaleY(${1 + amount}) `;
+    clearTimeout(stretchTimeout);
+    stretchTimeout = setTimeout(() => { page.style.transform = 'scaleY(1)'; }, 250);
+  }
+  window.addEventListener('wheel', (e) => {
+    const atTop = window.scrollY <= 0;
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 2;
+    if (atTop && e.deltaY < 0) {
+      page.style.transformOrigin = 'top center';
+      stretch(Math.min(0.02, Math.abs(e.deltaY) / 6000));
+    } else if (atBottom && e.deltaY > 0) {
+      page.style.transformOrigin = 'bottom center';
+      stretch(Math.min(0.02, Math.abs(e.deltaY) / 6000));
+    }
+  }, { passive: true });
+
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchmove', e => {
+    const atTop = window.scrollY <= 0;
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 2;
+    const diff = e.touches[0].clientY - touchStartY;
+    if (atTop && diff > 30) {
+      page.style.transformOrigin = 'top center';
+      stretch(Math.min(0.015, diff / 8000));
+    } else if (atBottom && diff < -30) {
+      page.style.transformOrigin = 'bottom center';
+      stretch(Math.min(0.015, Math.abs(diff) / 8000));
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
